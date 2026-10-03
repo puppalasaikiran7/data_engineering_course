@@ -1,0 +1,815 @@
+
+MySQL -u username -p 
+password : enter password 
+
+
+ sql commands :
+_______________
+
+ddl ( data definition language ) [ schema management ] [ create , drop , alter , truncate , rename ]
+
+dml ( data manipulating language ) [ data handling ] [ insert , update , delete , merge(join) ]
+
+dql ( data query language ) [ data retrieval ] [ select ]
+
+dcl ( data control language ) [ permission and access control] [ grant , revoke ]
+
+tcl ( transaction control language ) [set transaction  , commit , roll back , save point ] 
+
+
+
+
+creating database 
+__________________
+
+create database database_name;
+
+create database if not exists database_name;
+
+
+use database
+____________
+
+use database_name;
+
+
+
+creating tables 
+________________
+
+
+create table table_name(
+	column1_name datatype constraints,
+	column2_name datatype constraints,
+	column3_name datatype constraints
+)
+
+create table movie(
+	movie_id int   primary key auto_increment,   = auto_increment will increment the values automatically we don't have to insert values
+	title varchar(255)  unique,
+	released_year year not null,
+	genre varchar(100) not null,
+	language varchar(50) default 'telugu',     = we have given default which applies to all and we don't have to insert values 
+	duration_minutes int,
+	rating decimal(3,1),
+	director_id int,
+	foreign key(director_id) references directors(director_id)
+	age int , check(age>18)
+);
+
+
+to see what databases  are created 
+________________________________________
+
+show databases;
+
+
+
+to see the tables which are created
+___________________________________
+
+show tables;
+
+
+
+deleting database
+_________________
+
+drop database database_name 
+
+drop database if exists database_name 
+
+
+
+deleting tables
+________________
+
+drop table table_name;
+
+
+
+
+data types 
+__________
+
+1)  int ( 4 bytes ) 
+2)  bigint ( 8 bytes )
+3)  float ( 4 bytes ) 
+4)  double ( 8 bytes ) 
+5)  decimal ( mostly used for financial )
+6)  char ( fixed length characters, does not handle memory efficiently ) 
+7)  varchar ( variable length characters , handles memory efficiently  ) 
+8)  text ( stores text )
+9)  date ( stores the date values in year-month-date format )
+10) time ( stores the time values in hour-minute-second format ) 
+11) date-time ( stores date and time values in the format year-month-date hours-minutes-seconds ) 
+12) timestamp  ( stores  the current time and date ) 
+13) Boolean 
+14) blob ( stores video and image files ) 
+15) year 
+
+
+
+constraints 
+___________
+
+1) not null
+2) unique
+3) primary  key 
+4) foreign key 
+5) default
+6) check 
+7) auto_increment
+
+
+primary key 
+___________
+
+it is a unique identifier for each record in the database table 
+
+syntax:
+_______
+
+movie_id int primary key auto_increment,
+
+primary key( movie_id );
+
+
+
+foreign key 
+___________
+
+it is a field in one table , which refers to primary key in another table 
+
+
+syntax :
+________
+
+foreign key(director_id) references directors(director_id)
+
+
+
+
+
+
+inserting values in table
+_________________________
+
+insert into table_name ( col 1 , col 2 , col 3 , col 4 ) values
+( value 1, value 2 , value 3 ) ;
+
+
+
+
+select values from the tables
+_____________________________
+
+select col1 , col2 from table_name;   
+
+select * from table_name ;  	     ( selects all the values from the column ) 
+
+select distinct col from table_name; ( selects distinct values from the column ) 
+
+
+
+as ( alias )  ( it is used to create alternative name for the col or table ) 
+_____________________________________________________________________________
+
+
+select name as directors_name , dob as date_of_birth from directors ;
+
+select movie_id , box_office_collection-budget as profit_or_loss from box_office ;
+
+
+
+
+
+where 
+_____
+
+select col1 , col2 from table_name where condition ;
+
+operators used with where clause 
+________________________________
+
+1) arthematic operators ( + , - , / , * , % ) 
+2) comparison opeartors ( = , != ,> , < , >= , <= ) 
+3) logical operators ( and , or , not )
+4) range operators ( between , in )   ==> where column_name in (value1 , value2 , value3 ) 
+5) pattern matching ( like , not like )  
+6) null checking ( is null , is not null )
+
+
+pattern matching 
+_________________
+
+select col from table where col_name like pattern 
+
+example 
+_______
+
+select * from student where name like 's%'
+
+select * from student where name like '%s'
+
+select * from student where name like 's_'
+
+
+limit
+_____
+
+select col1 , col2 from table_name limit number_of_rows;
+
+select title , release_year  from movies limit 5;
+
+
+
+order by
+________
+
+select col from table_name order  by col;
+
+example: select title , release_year from  movies order by released_year ;
+
+
+
+
+aggregate function
+___________________
+
+1) count 
+2) max 
+3) min 
+4) sum 
+5) avg
+
+
+group by
+________
+
+select col1 , aggregate function from table_name group by col1 ;
+
+select genre , count(*) from movies group by genre ;
+
+
+having 
+______
+
+having is used after the group by is used to filter out 
+
+select col , aggregate_function(col) from table group by col_name having aggregate_function(col) condition ;
+
+
+order of using sql clause 
+_________________________
+
+select 
+from 
+join 
+where
+group by 
+having 
+order by
+limit
+
+safe mode off 
+_____________
+
+safe mode will prevent you from updating the value to disable safe mode we use 
+set sql_safe_updates = 0;
+
+
+
+update
+_______
+
+
+update table_name set col1 = value1 , col2 = value2 where condition ;
+
+update movies set rating = 9.0 where title = 'pokiri';
+
+
+delete
+______
+
+delete from table_name where condition ;
+
+delete from movie where title = 'kalki 2898 ad';
+
+
+cascading the reference
+_______________________
+ 
+
+automatically deletes and updates the values from the child table that references the deleted row in the parent table
+
+you need to write this syntax inside the creating table of child
+
+---  on delete cascade   ---
+---  on update cascade   ---
+
+
+
+alter 
+_____
+
+this is used for 
+
+1)adding , modifying , removing  columns 
+2) adding and removing constraints 
+3) change in data type of columns
+4) rename a column or table
+
+
+syntax 
+
+alter table table_name add column_name datatype constraints ;
+alter table table_name drop column column_name;
+alter table table_name change old_col_name new_col_name datatype; 
+alter table table_name modify column_name new_datatype new_constraint;
+
+ 
+to add or drop constraint using alter 
+_____________________________________
+
+alter table table_name add constraint constraint_name constraint (col);
+
+example :  ALTER TABLE table_name ADD CONSTRAINT unique_name unique (f_name);
+
+
+ALTER TABLE table_name DROP CONSTRAINT constraint_name;
+
+example : alter table  table_name drop constraint unique_name ;
+
+
+other operations on tables
+__________________________
+
+
+rename table old_table_name to new_table_name;
+
+truncate table table_name ; = this will remove the values inside the table but the table will be there 
+
+
+
+
+joins 
+______
+
+_________________________________________________
+inner joins- returns common values in both table |
+_________________________________________________|
+
+select columns from table1 inner join table2 on table1.column = table2.column
+  
+
+select m.title , d.name from movies m inner join directors d on m.director_id = d.director_id ;
+ 
+_______________________________________________________________________________________________________________________________________________
+																	      |
+left join - return all the rows from the left table and the common rows from the right table , if there is no match then it will return null  |
+______________________________________________________________________________________________________________________________________________|
+
+select columns from table1 left join table2 on table1.col = table2.col ;
+
+select m.title , d.name from movies left join directors on m.director_id = d.director_id;
+
+
+_______________________________________________________________________________________________________________________________________________
+																	      |
+right join - return all the rows from the right table and the common rows from the left table , if there is no match then it will return null |
+______________________________________________________________________________________________________________________________________________|
+
+select col from table1 right join table 2 on table1.column = table2.column
+
+select m.title , d.name from movie m right join directors d on m.director_id = d.director_id ;
+
+
+
+_______________________________________________________________________________________________________________________________________________
+																	      |
+full join - return all rows when there is a match in either the left or right table .if there is no match null value will be returned 	      |
+______________________________________________________________________________________________________________________________________________|
+
+select column from table1 left join table2 on table1.column = table2.column 
+union 
+select column from table1 right join table2 on table1.column = table2.column
+
+___________________________________________________________________________________________________________
+right exclusive join - return only right part of the table with out any common values from the left table  |
+___________________________________________________________________________________________________________|
+
+select * from table1 right join table2 on table1.column = table2.column where table1.col is null
+
+
+_______________________________________________________________________________________________________________________________________________
+																	      |
+cross join - combines every row form the left table with every row from the right table ( cartesian product )                                 |
+______________________________________________________________________________________________________________________________________________|
+
+
+
+select columns from table1 cross join table2 ;
+
+select * from movies m cross join directors;
+
+
+
+______________
+set operators |
+______________|
+
+this is used to combine two or more select statements into one single result set 
+
+rules 
+______
+
+1) order by needs to be used at the last of the query 
+2) same datatypes should be present 
+3) same number of columns should be present 
+4) same order of columns should be present 
+5) first query controls the alias 
+6) mapping correct columns 
+
+
+union 
+______
+
+union - will remove the duplicate values 
+
+
+select col1 , col2 from table 1 
+union 
+select col1 ,col2 from table 2
+
+union all 
+_________
+
+union all - will keep the duplicates 
+
+select col1 , col2 from table 1 
+union  all 
+select col1 ,col2 from table 2
+
+
+except 
+______
+
+this will give the values which are not common from the first table
+
+select firstname , lastname from sales.employees
+except 
+select firstname , lastname from sales.customers;
+
+
+intersect 
+__________
+
+this will give the common values from both the tables 
+
+select firstname , lastname from sales.employees
+intersect  
+select firstname , lastname from sales.customers;
+
+
+
+
+functions 
+___________
+
+
+string  functions 
+__________________
+
+manipulate : concat , upper , lower , trim , replace 
+calculate : len 
+string extraction : left , right , substring 
+
+example :
+
+select first_name , left(trim(first_name) , 2 ) , right(trim(first_name) , 2 ) as first_2_char from customers ;
+
+
+select col , substring(value , start , length ) from table
+
+select first_name , substring(first_name , 2 ,4 ) from customers;
+
+
+number functions 
+_________________
+
+
+round (value , number )  
+
+
+
+
+subqueries 
+__________
+
+subquery is a query nested inside another query . it is used to fetch data that is used by main query as a condition or value 
+
+categories in sub queries 
+__________________________
+
+
+1) select 
+
+select name , salary , (select avg(salary) from employees) from employees;
+
+2) from 
+
+syntax : select col from ( select col from table where condition ) as aliasname where outerquery_condition
+
+
+select max(marks) from (select marks from student where city = "delhi") as delhi_student ;
+
+select dept_avg.department , dept_avg.avg_salary from (select department , avg(salary) as avg_salary  from employees group by department ) as dept_avg ;
+
+
+3) where 
+
+syntax : select col from table where col operator (subquery)
+
+
+select name , salary from employee where salary > ( select avg(salary) from employee);
+
+for single row we use regular operatos 
+for multiple rows we use in  , not in 
+for multiple columns we use exists / not exists
+
+
+4) having 
+
+select genre , avg(rating) from movies group by genre having avg(rating) >(select avg(rating) from movies);
+
+
+
+______
+view |
+_____|
+
+
+this is used to create the virtual table from the original  table 
+
+create view view_name as select col from table 
+
+after this we can perform operations on the virtual table which is created using view 
+
+select * from view_name where marks>90;
+
+
+
+data control language 
+_____________________
+
+
+_______
+grant |
+______|
+
+
+grant persmission_type on table_name to user_or_role
+
+permission type 
+_______________
+
+select 
+insert 
+update 
+delete
+
+
+example 
+_______
+
+
+grant select  on employee to analyst 
+
+
+_______
+revoke |
+_______|
+
+revoke permission_type on table from user_or_role 
+
+example : revoke select on employee from analyst;
+
+
+
+
+window functions 
+_________________
+
+window functions in sql are powerfull set of functions that allow us to perform calculations on set of row , these calculations can be performed 
+with any collapsing of rows that is with out grouping rows 
+
+syntax :
+________
+
+select col1 , windows_functions(col2) over([ partition by column_name1 ] [ order by column_name3])as new_column from table_name;
+
+
+
+functions:
+__________
+
+aggregate function ( count , sum , avg , min , max  ) 
+rank function ( row_number , rank , dense_rank ,  ntile , lead , lag ) 
+
+
+
+
+rank() - rank function assign rank to row within partition , with the same rank given to rows with same identical values , if the two rows share 	the same rank the next rank is skipped 
+
+example: select name , department , salary , rank() over( partition  by department  order by salary desc ) as emp_rank from employee;
+________
+
+
+dense_rank() - denserank function assigns ranks to row within partition , with the same rank given to rows with same identical values , if the 			two rows share the same rank the next rank is not skipped 
+
+example: select name , department , salary , dense_rank() over( partition by department order by salary desc ) as emp_dense_rank from employee;
+_______
+
+
+row_number() - this will assign the unique number to each row 
+
+example : select name , department , salary , row_number() over (partition by department order by salary desc ) as emp_row from employee;
+_______
+
+
+lead () - this will look a head for the next row values , gets the next row values
+
+example : select name , department , salary , lead(salary) over ( partition by department order by salary desc ) as next_salary from employee;
+
+lag() - it does the opposite of lead , gets the previous row values
+
+example : select name , department , salary , lag(salary) over ( partition by department order by salary desc ) as previous_salary from employee;
+
+
+
+
+case statement 
+_______________
+
+
+ 
+ case  
+	when condition then result 
+	when condition then result 
+	else default_result 
+ end 
+
+example: 
+
+SELECT ENAME, SALARY, 
+    CASE 
+        WHEN SALARY > 10000 THEN 'High'
+        WHEN SALARY BETWEEN 5000 AND 10000 THEN 'Medium'
+        ELSE 'Low'
+    END AS SALARY_CATEGORY
+FROM EMP;
+
+
+
+example2 :
+__________
+
+update student 
+set grade = case 
+	when marks>90 then 'a'
+	when marks>=80 then 'b'
+	when marks>70 then 'c'
+	else 'd'
+end;
+
+
+
+
+date time functions 
+___________________
+
+
+current time
+_____________
+
+in MySQL 
+_________
+
+current_timestamp = this will return current time and date 
+
+syntax : select current_timestamp;
+
+
+
+current_date = gives current date of real life 
+
+syntax : select current_date;
+
+
+
+current_time = gives current time of real life 
+
+syntax : select current_time ;
+
+
+
+in sql server 
+_____________
+
+getdate() = this will give you the date and time 
+
+
+
+extraction
+___________
+
+in MySQL
+_________
+
+----- year(date ) , month( date )  , date(date) , hour(time) , minute(time)  , second(time) ------
+
+example :
+
+select name , dob , year(dob) , month(dob) , date(dob) from employees ; 
+
+
+in sql server
+_____________
+
+1) datepart(part , date) 
+
+example:
+
+select datepart(year , getdate()) 
+
+select datepart(month , getdate())
+
+select datepart (day , getdate())
+
+select datepart(hour , getdate())
+
+select datepart(minute , getdate())
+
+select datepart(seconds , getdate())
+
+
+
+2) datename(part , date)
+
+
+
+
+3) datetrunc(part ,date)  - this will reset which is after the mentioned part 
+
+example :
+
+select datetrunc(minute , getdate())  - this will reset the seconds 
+
+
+
+
+4) eomonth
+
+eomonth(date)  - this will give you the last date of the month 
+
+
+
+
+
+
+
+calculation
+____________
+
+------ date_add (date , interval x unit ) , date_sub ( date , interval x unit ) , datediff ( date1 , date2 ) [ return days ] , timestampdiff(unit ,date1 , date2 ) [ returns what ever the time stamp is given ]
+
+example :
+
+select date_add('2025-03-14' , interval 5 day );  // you can add ( day , month , year ) ;
+
+SELECT TIMESTAMPDIFF(YEAR, '2000-01-01', '2025-02-27');
+
+
+
+format
+_______
+
+------ date_format (date , format )---------
+
+example :
+
+select date_format ('2024-04-15' , '%d-%m-%y' );
+
+
+
+
+
+describe table 
+______________
+
+desc table_name ;
+
+
+
+
