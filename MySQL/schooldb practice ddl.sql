@@ -37,3 +37,21 @@ select * from courses;
 -- drop table courses;
 
 -- drop database schooldb;
+
+# rename the table  ( in mysql renaming can be done only for the table not for database ) 
+rename table courses to bootcamps;
+
+show tables;
+
+alter table bootcamps add price int;
+
+select * from bootcamps;
+
+truncate table bootcamps;
+
+select * from bootcamps;
+
+alter table bootcamps drop column price;
+
+
+

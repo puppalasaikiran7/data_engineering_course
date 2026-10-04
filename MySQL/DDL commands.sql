@@ -36,8 +36,30 @@ values
 select * from books;
 
 
+#rename 
+rename table books to digital_books;
 
+#alter 
+#add 
+alter table digital_books add book_price int;
 
+#drop / delete 
+alter table digital_books drop column book_price;
+
+#creating the table just for truncating 
+create table if not exists testing_table(
+id int primary key,
+name varchar(255),
+age int,
+birth_year year
+);
+
+insert ignore into testing_table(id,name,age,birth_year) values(1,'saikiran',23,2003);
+
+select * from testing_table;
+
+#truncate 
+truncate table testing_table;
 
 
 
