@@ -87,6 +87,33 @@ ________________
 drop table table_name;
 
 
+renaming the table ( renaming can only be done on the table not on the databases in MySQL ) 
+___________________
+
+rename table old_table_name to new_table_name;
+
+
+
+altering the table 
+___________________
+
+ADD
+__
+
+alter table table_name add column_name datatype;
+
+Drop / deleting
+_______________
+
+alter table table_name drop column column_name;
+
+
+
+Truncate the table 
+__________________
+
+truncate table table_name; = this will remove the values inside the table but the table and columns will be there.
+
 
 
 data types 
@@ -341,14 +368,6 @@ ALTER TABLE table_name DROP CONSTRAINT constraint_name;
 
 example : alter table  table_name drop constraint unique_name ;
 
-
-other operations on tables
-__________________________
-
-
-rename table old_table_name to new_table_name;
-
-truncate table table_name ; = this will remove the values inside the table but the table will be there 
 
 
 
