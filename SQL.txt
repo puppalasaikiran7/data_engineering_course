@@ -155,7 +155,7 @@ foreign key(director_id) references directors(director_id)
 inserting values in table
 _________________________
 
-insert into table_name ( col 1 , col 2 , col 3 , col 4 ) values
+insert ignore into table_name ( col 1 , col 2 , col 3 , col 4 ) values
 ( value 1, value 2 , value 3 ) ;
 
 
