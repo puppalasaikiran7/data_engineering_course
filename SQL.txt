@@ -1,3 +1,40 @@
+1) what is sql 
+sql is a declarative programming language used to communicate with the data base and do the intended task.it helps store , find , update , delete data in database.
+
+2) what is database 
+data base is a organized collection of data.
+
+data is stored persistently in disk or ssd ( solid state drive ) and inside disk data is stored in the format of pages.
+
+internally database uses B-tree or B+ tree for searching.
+
+Types of data base 
+1) relational data base ( sql ) 
+2) non relational data base ( mongo db ) ( binary json format ) 
+
+Workloads types 
+1) oltp ( online transaction processing ) ( faster execution ) 
+2) olap ( online analytics processing ) ( slower execution ) 
+
+
+
+ACID property 
+
+1) A --> atomicity ( all or nothing )
+A transaction is treated as a single unit , either all the operations with in the transactions will execute or none of them do.
+
+example : if there is a 100 rupess transfer from one bank account to another account then first the amount will be deducted from the first account and then added to second account, if after subtracting the amount from first account happens and the server fails for adding the amount to second account then the complete transaction will be stopped.
+
+2) C --> consistancy 
+consistancy means the data base must follow its own rules ( data type , foreign key , custom rules, unique keys ) 
+
+3) I --> isolation 
+when multiple transactions happen at the same time , the execution of one transaction must not interfer with another or not be visible with another until it is completed.
+
+4) D --> durability ( saved permanently ) 
+Once the transaction is successfully commited its changes are permenant.
+
+
 
 MySQL -u username -p 
 password : enter password 
@@ -15,8 +52,6 @@ dql ( data query language ) [ data retrieval ] [ select ]
 dcl ( data control language ) [ permission and access control] [ grant , revoke ]
 
 tcl ( transaction control language ) [set transaction  , commit , roll back , save point ] 
-
-
 
 
 creating database 
