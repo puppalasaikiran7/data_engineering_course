@@ -54,7 +54,7 @@ age int,
 birth_year year
 );
 
-insert ignore into testing_table(id,name,age,birth_year) values(1,'saikiran',23,2003);
+insert ignore into testing_table(id,name,age,birth_year,birth_month) values(1,'saikiran',23,2003,2003-06-20);
 
 select * from testing_table;
 
@@ -62,4 +62,22 @@ select * from testing_table;
 truncate table testing_table;
 
 
+#alter 
+
+#add 
+alter table testing_table add column birth_month date;
+
+#change data type and column name 
+alter table testing_table change birth_month birth_dates datetime;
+
+#add 
+alter table testing_table add column review text;
+
+#rename the column name 
+alter table testing_table rename column review to online_review;
+
+#modify the data type
+alter table testing_table modify column online_review longtext; 
+
+select * from testing_table;
 
