@@ -54,6 +54,15 @@ dcl ( data control language ) [ permission and access control] [ grant , revoke 
 tcl ( transaction control language ) [set transaction  , commit , roll back , save point ] 
 
 
+
+schema of the table 
+____________________
+
+describe table_name;  ( this will show you the data types used and constraints used and the null value ) 
+
+
+DDL commands 
+
 creating database 
 __________________
 
@@ -78,6 +87,8 @@ create table table_name(
 	column2_name datatype constraints,
 	column3_name datatype constraints
 )
+
+example : 
 
 create table movie(
 	movie_id int   primary key auto_increment,   = auto_increment will increment the values automatically we don't have to insert values
@@ -122,26 +133,37 @@ ________________
 drop table table_name;
 
 
-renaming the table ( renaming can only be done on the table not on the databases in MySQL ) 
+Renaming the table ( renaming can only be done on the table not on the databases in MySQL ) 
 ___________________
 
 rename table old_table_name to new_table_name;
 
 
+alter 
+_____
 
-altering the table 
-___________________
+this is used for 
 
-ADD
-__
+1) adding ,  removing  columns 
+2) modify the data type of the column.
+3) rename a column or table
+4) change in name of the column and data type of column
+5) adding and removing constraints 
 
-alter table table_name add column_name datatype;
 
-Drop / deleting
-_______________
+syntax 
 
+alter table table_name add column column_name datatype constraints ;
 alter table table_name drop column column_name;
+alter table table_name drop column1, drop column 2;
+alter table table_name modify column_name new_datatype new_constraint;
+alter table table_name rename column old_col_name to new_col_name;
+alter table table_name change old_col_name new_col_name datatype; 
+alter table table_name add constraint constraint_name constraint_type (column_name);
+aLTER TABLE table_name DROP CONSTRAINT constraint_name;
 
+example :  ALTER TABLE table_name ADD CONSTRAINT unique_name unique (f_name);
+example : alter table  table_name drop constraint unique_name ;
 
 
 Truncate the table 
@@ -162,13 +184,15 @@ __________
 6)  char ( fixed length characters, does not handle memory efficiently ) 
 7)  varchar ( variable length characters , handles memory efficiently  ) 
 8)  text ( stores text )
-9)  date ( stores the date values in year-month-date format )
-10) time ( stores the time values in hour-minute-second format ) 
-11) date-time ( stores date and time values in the format year-month-date hours-minutes-seconds ) 
-12) timestamp  ( stores  the current time and date ) 
-13) Boolean 
-14) blob ( stores video and image files ) 
-15) year 
+9)  MEDIUMTEXT ( Stores 16mb of text )
+10) LONGTEXT ( stores 4gb of text )
+11)  date ( stores the date values in year-month-date format )
+12) time ( stores the time values in hour-minute-second format ) 
+13) date-time ( stores date and time values in the format year-month-date hours-minutes-seconds ) 
+14) timestamp  ( stores  the current time and date ) 
+15) Boolean 
+16) blob ( stores video and image files ) 
+17) year 
 
 
 
@@ -184,10 +208,21 @@ ___________
 7) auto_increment
 
 
+not null
+________
+
+email_id varchar(255) not null;
+
+unique 
+_______
+
+phone_number bigint unique;
+
+
 primary key 
 ___________
 
-it is a unique identifier for each record in the database table 
+it is a unique identifier for each record in the database table ,it is the combination of unique and not null
 
 syntax:
 _______
@@ -209,16 +244,56 @@ ________
 
 foreign key(director_id) references directors(director_id)
 
+check 
+______
+
+age int check(age>=18);
+
+
+auto increment 
+_______________
+
+emp_id int autoincrement primary_key;
 
 
 
-
+DML commands 
 
 inserting values in table
 _________________________
 
 insert ignore into table_name ( col 1 , col 2 , col 3 , col 4 ) values
 ( value 1, value 2 , value 3 ) ;
+
+
+update
+_______
+
+
+update table_name set col_name = value1 , col_name = value2 where condition ;
+
+update movies set rating = 9.0 where title = 'pokiri';
+
+
+delete
+______
+
+delete from table_name where condition ;
+
+delete from movie where title = 'kalki 2898 ad';
+
+
+cascading the reference
+_______________________
+ 
+
+automatically deletes and updates the values from the child table that references the deleted row in the parent table
+
+you need to write this syntax inside the creating table of child
+
+---  on delete cascade   ---
+---  on update cascade   ---
+
 
 
 
@@ -241,9 +316,6 @@ _____________________________________________________________________________
 select name as directors_name , dob as date_of_birth from directors ;
 
 select movie_id , box_office_collection-budget as profit_or_loss from box_office ;
-
-
-
 
 
 where 
@@ -341,67 +413,6 @@ safe mode will prevent you from updating the value to disable safe mode we use
 set sql_safe_updates = 0;
 
 
-
-update
-_______
-
-
-update table_name set col1 = value1 , col2 = value2 where condition ;
-
-update movies set rating = 9.0 where title = 'pokiri';
-
-
-delete
-______
-
-delete from table_name where condition ;
-
-delete from movie where title = 'kalki 2898 ad';
-
-
-cascading the reference
-_______________________
- 
-
-automatically deletes and updates the values from the child table that references the deleted row in the parent table
-
-you need to write this syntax inside the creating table of child
-
----  on delete cascade   ---
----  on update cascade   ---
-
-
-
-alter 
-_____
-
-this is used for 
-
-1)adding , modifying , removing  columns 
-2) adding and removing constraints 
-3) change in data type of columns
-4) rename a column or table
-
-
-syntax 
-
-alter table table_name add column_name datatype constraints ;
-alter table table_name drop column column_name;
-alter table table_name change old_col_name new_col_name datatype; 
-alter table table_name modify column_name new_datatype new_constraint;
-
- 
-to add or drop constraint using alter 
-_____________________________________
-
-alter table table_name add constraint constraint_name constraint (col);
-
-example :  ALTER TABLE table_name ADD CONSTRAINT unique_name unique (f_name);
-
-
-ALTER TABLE table_name DROP CONSTRAINT constraint_name;
-
-example : alter table  table_name drop constraint unique_name ;
 
 
 
