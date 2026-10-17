@@ -256,6 +256,19 @@ _______________
 emp_id int autoincrement primary_key;
 
 
+cascading the reference
+_______________________
+ 
+
+automatically deletes and updates the values from the child table that references the deleted row in the parent table
+
+you need to write this syntax inside the creating table of child
+
+---  on delete cascade   ---
+---  on update cascade   ---
+
+
+
 
 DML commands 
 
@@ -282,17 +295,6 @@ delete from table_name where condition ;
 
 delete from movie where title = 'kalki 2898 ad';
 
-
-cascading the reference
-_______________________
- 
-
-automatically deletes and updates the values from the child table that references the deleted row in the parent table
-
-you need to write this syntax inside the creating table of child
-
----  on delete cascade   ---
----  on update cascade   ---
 
 
 
@@ -323,6 +325,10 @@ _____
 
 select col1 , col2 from table_name where condition ;
 
+
+conditions 
+__________
+
 operators used with where clause 
 ________________________________
 
@@ -339,6 +345,10 @@ _________________
 
 select col from table where col_name like pattern 
 
+% = zero or more characters 
+_ = exactly one character 
+
+
 example 
 _______
 
@@ -347,6 +357,9 @@ select * from student where name like 's%'
 select * from student where name like '%s'
 
 select * from student where name like 's_'
+
+
+
 
 
 limit
@@ -361,9 +374,11 @@ select title , release_year  from movies limit 5;
 order by
 ________
 
-select col from table_name order  by col;
+select col from table_name order  by col asc ;
+select col from table_name order  by col desc ;
 
-example: select title , release_year from  movies order by released_year ;
+example: select title , release_year from  movies order by released_year asc;
+select title , release_year from movies order by release_year desc;
 
 
 
@@ -383,7 +398,8 @@ ________
 
 select col1 , aggregate function from table_name group by col1 ;
 
-select genre , count(*) from movies group by genre ;
+example :
+select genre , count(*) from movies group by genre;
 
 
 having 
@@ -392,12 +408,16 @@ ______
 having is used after the group by is used to filter out 
 
 select col , aggregate_function(col) from table group by col_name having aggregate_function(col) condition ;
+example:
+select department , sum(salary) from employees group by department having sum(salary) >40000;
 
 
 order of using sql clause 
 _________________________
 
 select 
+column1
+aggregate function
 from 
 join 
 where
