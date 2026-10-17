@@ -663,7 +663,7 @@ select
 insert 
 update 
 delete
-
+ALL 
 
 example 
 _______
