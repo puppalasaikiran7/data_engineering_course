@@ -206,7 +206,7 @@ ___________
 5) default
 6) check 
 7) auto_increment
-
+8) composite key ( it is a primary key made up of 2 or more columns working together to uniquely identify a record in a table ) 
 
 not null
 ________
@@ -434,7 +434,85 @@ set sql_safe_updates = 0;
 
 
 
+Indexing 
+_________
 
+
+indexing is done to reterive the data faster , if we create the table with the column primary key still this indexing will be usefull, when using the where, join ,order by. like we 
+use the where clause for reterival based on another column then index is usefull
+
+
+create index 
+____________
+
+create index index_name on table(columns);
+
+example: create index student_name_age students(student_name , age);
+
+drop index
+___________
+
+drop index index_name on table;
+
+example : drop index student_name_age on students;
+
+
+show index
+__________
+
+show index from table_name;
+
+
+
+______
+view |
+_____|
+
+
+this is used to create the virtual table from the original  table 
+
+create view view_name as select col from table 
+
+after this we can perform operations on the virtual table which is created using view 
+
+select * from view_name where marks>90;
+
+
+
+data control language 
+_____________________
+
+
+_______
+grant |
+______|
+
+
+grant persmission_type on table_name to user_or_role
+
+permission type 
+_______________
+
+select 
+insert 
+update 
+delete
+ALL 
+
+example 
+_______
+
+
+grant select  on employee to analyst 
+
+
+_______
+revoke |
+_______|
+
+revoke permission_type on table from user_or_role 
+
+example : revoke select on employee from analyst;
 
 
 
@@ -627,58 +705,6 @@ for multiple columns we use exists / not exists
 4) having 
 
 select genre , avg(rating) from movies group by genre having avg(rating) >(select avg(rating) from movies);
-
-
-
-______
-view |
-_____|
-
-
-this is used to create the virtual table from the original  table 
-
-create view view_name as select col from table 
-
-after this we can perform operations on the virtual table which is created using view 
-
-select * from view_name where marks>90;
-
-
-
-data control language 
-_____________________
-
-
-_______
-grant |
-______|
-
-
-grant persmission_type on table_name to user_or_role
-
-permission type 
-_______________
-
-select 
-insert 
-update 
-delete
-ALL 
-
-example 
-_______
-
-
-grant select  on employee to analyst 
-
-
-_______
-revoke |
-_______|
-
-revoke permission_type on table from user_or_role 
-
-example : revoke select on employee from analyst;
 
 
 
