@@ -469,9 +469,11 @@ view |
 _____|
 
 
-this is used to create the virtual table from the original  table 
+this is used to create the virtual table from the original table, so that the person who we will be sharing the will not be able to see the complete table and will only be seeing the view data created.
 
-create view view_name as select col from table 
+example: when the hr is asking for the employees data and they should not be seeing the salary column then we can create the view and then share the table name .
+
+--> create view view_name as select col from table 
 
 after this we can perform operations on the virtual table which is created using view 
 
