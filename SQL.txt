@@ -268,6 +268,13 @@ you need to write this syntax inside the creating table of child
 ---  on update cascade   ---
 
 
+cloning the table 
+__________________
+
+create table clone_table_name as select * from table_name;
+
+example : create table employee_clone as select * from employee; 
+
 
 
 DML commands 
@@ -318,6 +325,15 @@ _____________________________________________________________________________
 select name as directors_name , dob as date_of_birth from directors ;
 
 select movie_id , box_office_collection-budget as profit_or_loss from box_office ;
+
+
+select ( offset ) 
+__________________
+
+find the 6th highest salary of the person 
+
+select distinct salaries from employee order by desc limit 1  offset 5
+
 
 
 where 
