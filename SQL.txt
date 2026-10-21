@@ -447,7 +447,7 @@ ____________
 
 create index index_name on table(columns);
 
-example: create index student_name_age students(student_name , age);
+example: create index student_name_age on students(student_name , age);
 
 drop index
 ___________
@@ -473,11 +473,21 @@ this is used to create the virtual table from the original table, so that the pe
 
 example: when the hr is asking for the employees data and they should not be seeing the salary column then we can create the view and then share the table name .
 
---> create view view_name as select col from table 
+Create 
+_______
+
+create view view_name as select col from table 
 
 after this we can perform operations on the virtual table which is created using view 
 
 select * from view_name where marks>90;
+
+
+Drop 
+____
+drop view view_name 
+
+
 
 
 
@@ -577,6 +587,68 @@ ________________________________________________________________________________
 select columns from table1 cross join table2 ;
 
 select * from movies m cross join directors;
+
+
+
+
+stored procedures
+__________________
+
+right click on the stored procedures in the database -> create stored procedures 
+rename the procedure name in the syntax 
+and after the begin enter the query 
+then click on apply and the proceed 
+
+in the normal sql file 
+--> call stored_procedure_name;
+
+parameters 
+__________
+
+1) in 
+2) out 
+
+IN
+___
+
+used when you want to pass a value into the stored procedure 
+
+
+create procedure procedure_name ( in parameter_name datatype )
+begin 
+query
+end 
+
+
+call procedure_name (value);
+
+
+OUT
+___
+
+create procedure procedure_name (out parameter_name datatype)
+begin 
+select  count(*) into parameter_name from table_name 
+end 
+
+
+
+call procedure_name(@total)
+
+select @total;
+
+
+
+drop stored procedures 
+______________________
+
+drop procedure procedure_name;
+
+
+show stored procedures
+_______________________
+
+show procedure stats;
 
 
 
@@ -915,13 +987,6 @@ example :
 select date_format ('2024-04-15' , '%d-%m-%y' );
 
 
-
-
-
-describe table 
-______________
-
-desc table_name ;
 
 
 
